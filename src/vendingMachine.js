@@ -43,6 +43,7 @@ module.exports = {
     {
       var coin = new scope.Q(scope.dataProvider.getData().coins).Single(function(x) { return x.code == coinType; });
       scope.totalInserted = Math.round((scope.totalInserted + coin.amount) * 100) / 100;
+      scope.display.write(scope.totalInserted.toString());
     };
 
     scope.keyPressed = function(key)

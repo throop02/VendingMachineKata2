@@ -9,6 +9,8 @@ var mockStdin = require('mock-stdin').stdin();
 var vmSession;
 var mocks = require('./mocks');
 var mockConsole;
+var dataProvider;
+
 
 describe('vendingMachine', function() {
 
@@ -16,6 +18,7 @@ describe('vendingMachine', function() {
   {
     mockConsole = new mocks.mockConsole();
     vmSession = new vm.vmSession(mockStdin, mockConsole);
+    dataProvider = require('./../src/services/dataProviderService');
   });
 
   it('Listens for keypad input when initialized', function() {   
@@ -53,6 +56,15 @@ describe('vendingMachine', function() {
     
     vmSession = new vm.vmSession(mockStdin, mockConsole);
     expect(vmSession.totalInserted).to.equal(0);
+    
+  });
+
+  it('Displays total when coin is inserted', function() {   
+    
+    vmSession = new vm.vmSession(mockStdin, mockConsole);
+    vmSession.initMachine();
+    vmSession.coinInserted('q');
+    expect(vmSession.display.stack.indexOf("0.25") > -1).to.equal(true);
     
   });
 
