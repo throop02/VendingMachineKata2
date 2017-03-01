@@ -1,7 +1,7 @@
 //displayService
 
 module.exports = {
-  init: function () {
+  init: function (con) {
     
     var scope = this;
 
@@ -10,6 +10,7 @@ module.exports = {
     scope.write = function(message)
     {
         scope.stack.push(message);
+        con.log(message);
     };
 
   }
