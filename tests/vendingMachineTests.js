@@ -42,6 +42,7 @@ describe('vendingMachine', function() {
 
   it('Accepts coins when coin key pressed', function() {   
     
+    vmSession.initMachine();
     var coinKeys = ['p','n','d','q'];
     for(var i = 0; i < coinKeys.length; i++)
     {
@@ -54,25 +55,39 @@ describe('vendingMachine', function() {
 
   it('Keeps track of total inserted', function() {   
     
-    vmSession = new vm.vmSession(mockStdin, mockConsole);
+    vmSession.initMachine();
     expect(vmSession.totalInserted).to.equal(0);
     
   });
 
   it('Displays total when coin is inserted', function() {   
     
-    vmSession = new vm.vmSession(mockStdin, mockConsole);
     vmSession.initMachine();
     vmSession.coinInserted('q');
     expect(vmSession.display.stack.indexOf("0.25") > -1).to.equal(true);
     
   });
 
-  it('Can have item purchased', function() {   
+  it('Can have items purchased', function() {   
     
-    vmSession = new vm.vmSession(mockStdin, mockConsole);
-    vmSession.tryPurchaseProduct();
-    expect(true).to.equal(true);
+    vmSession.initMachine();
+    var productCodes = ['a','b','c'];
+    for(var i = 0; i < productCodes.length; i++)
+    {
+      vmSession.keyPressed(productCodes[i]);
+    }
+
+    expect(vmSession.totalInserted < 0).to.equal(true);
+    
+  });
+
+    it('Resets state when initialized', function() {   
+    
+    vmSession.totalInserted = 1.00;
+    vmSession.lastKeyPressed = 'd';
+    vmSession.initMachine();
+
+    expect(vmSession.totalInserted == 0.00 && vmSession.lastKeyPressed == '').to.equal(true);
     
   });
 

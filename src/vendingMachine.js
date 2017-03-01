@@ -5,9 +5,9 @@ module.exports = {
     
     var scope = this;
 
-    scope.lastKeyPressed = '';
+    scope.lastKeyPressed;
     scope.display;
-    scope.totalInserted = 0.00;
+    scope.totalInserted;
     scope.dataProvider;
     scope.Q = require('node-linq').LINQ;
 
@@ -31,6 +31,9 @@ module.exports = {
     {
       var ds = require('./services/displayService');
       scope.dataProvider = require('./services/dataProviderService');
+      
+      scope.totalInserted = 0.00;
+      scope.lastKeyPressed = '';
       scope.display = new ds.init(con);
 
       scope.display.write("INSERT COIN: [p] Penny [n] Nickel [d] Dime [q] Quarter ([x] Exit)");
@@ -46,9 +49,10 @@ module.exports = {
       scope.display.write(scope.totalInserted.toString());
     };
 
-    scope.tryPurchaseProduct = function()
+    scope.tryPurchaseProduct = function(productType)
     {
-
+        var product = new scope.Q(scope.dataProvider.getData().products).Single(function(x) { return x.code == productType; });
+        scope.totalInserted = Math.round((scope.totalInserted - product.price) * 100) / 100;
     }
 
     scope.keyPressed = function(key)
@@ -58,6 +62,11 @@ module.exports = {
       if (['p','n','d','q'].indexOf(key) > -1)
       {
         scope.coinInserted(key);
+      }
+
+      if (['a','b','c'].indexOf(key) > -1)
+      {
+        scope.tryPurchaseProduct(key);
       }
 
     };
