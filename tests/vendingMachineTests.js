@@ -33,6 +33,7 @@ describe('vendingMachine', function() {
     vmSession.initMachine();
 
     expect(vmSession.display.stack.indexOf("INSERT COIN: [p] Penny [n] Nickel [d] Dime [q] Quarter ([x] Exit)") > -1).to.equal(true);
+    expect(vmSession.display.stack.indexOf("Select Product: [a] Cola [b] Chips [c] Candy") > -1).to.equal(true);
     
   });
 
