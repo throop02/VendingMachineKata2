@@ -18,10 +18,10 @@ describe('vendingMachine', function() {
     vmSession = new vm.vmSession(mockStdin, mockConsole);
   });
 
-  it('Listens for keypad input', function() {   
+  it('Listens for keypad input when initialized', function() {   
     
     var keyToTest = 'c';
-    vmSession.listenForKeypress();
+    vmSession.initMachine();
     mockStdin.send(keyToTest);
 
     expect(vmSession.lastKeyPressed).to.equal(keyToTest);

@@ -30,6 +30,8 @@ module.exports = {
       scope.display = new ds.init(con);
 
       scope.display.write("INSERT COIN: [p] Penny [n] Nickel [d] Dime [q] Quarter ([x] Exit)");
+
+      scope.listenForKeypress();
     }
 
   }
