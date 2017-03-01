@@ -45,7 +45,7 @@ describe('vendingMachine', function() {
       vmSession.keyPressed(coinKeys[i]);
     }
 
-    expect(true).to.equal(true);
+    expect(vmSession.totalInserted).to.equal(0.41);
     
   });
 

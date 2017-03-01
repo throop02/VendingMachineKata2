@@ -8,6 +8,8 @@ module.exports = {
     scope.lastKeyPressed = '';
     scope.display;
     scope.totalInserted = 0.00;
+    scope.dataProvider;
+    scope.Q = require('node-linq').LINQ;
 
     scope.listenForKeypress = function()
     {
@@ -28,6 +30,7 @@ module.exports = {
     scope.initMachine = function()
     {
       var ds = require('./services/displayService');
+      scope.dataProvider = require('./services/dataProviderService');
       scope.display = new ds.init(con);
 
       scope.display.write("INSERT COIN: [p] Penny [n] Nickel [d] Dime [q] Quarter ([x] Exit)");
@@ -36,9 +39,10 @@ module.exports = {
       scope.listenForKeypress();
     };
 
-    scope.coinInserted = function()
+    scope.coinInserted = function(coinType)
     {
-      scope.totalInserted += 0.25;
+      var coin = new scope.Q(scope.dataProvider.getData().coins).Single(function(x) { return x.code == coinType; });
+      scope.totalInserted = Math.round((scope.totalInserted + coin.amount) * 100) / 100;
     };
 
     scope.keyPressed = function(key)
@@ -47,7 +51,7 @@ module.exports = {
 
       if (['p','n','d','q'].indexOf(key) > -1)
       {
-        scope.coinInserted();
+        scope.coinInserted(key);
       }
 
     };
