@@ -15,7 +15,7 @@ module.exports = {
         keypress(stdin);
 
         stdin.on('keypress', function (ch, key) {
-        scope.lastKeyPressed = key.name;
+        scope.keyPressed(key.name);
         if (key && key.name == 'x') {
             stdin.pause();
         }
@@ -38,6 +38,17 @@ module.exports = {
 
     scope.coinInserted = function()
     {
+      scope.totalInserted += 0.25;
+    };
+
+    scope.keyPressed = function(key)
+    {
+      scope.lastKeyPressed = key;
+
+      if (['p','n','d','q'].indexOf(key) > -1)
+      {
+        scope.coinInserted();
+      }
 
     };
 

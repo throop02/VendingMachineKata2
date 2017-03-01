@@ -37,17 +37,22 @@ describe('vendingMachine', function() {
     
   });
 
-  it('Can accept coins', function() {   
+  it('Accepts coins when coin key pressed', function() {   
     
-    vmSession.coinInserted();
+    var coinKeys = ['p','n','d','q'];
+    for(var i = 0; i < coinKeys.length; i++)
+    {
+      vmSession.keyPressed(coinKeys[i]);
+    }
 
     expect(true).to.equal(true);
     
   });
 
   it('Keeps track of total inserted', function() {   
-
-    expect(vmSession.totalInserted).to.equal(0.00);
+    
+    vmSession = new vm.vmSession(mockStdin, mockConsole);
+    expect(vmSession.totalInserted).to.equal(0);
     
   });
 
