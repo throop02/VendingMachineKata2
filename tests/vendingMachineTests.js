@@ -40,7 +40,7 @@ describe('vendingMachine', function() {
     
   });
 
-  it('Accepts coins when coin key pressed', function() {   
+  it('Accepts silver coins when coin key pressed', function() {   
     
     vmSession.initMachine();
     var coinKeys = new _Q(dataProvider.getData().coins).Select(function(x) { return x.code; }).ToArray()
@@ -49,7 +49,8 @@ describe('vendingMachine', function() {
       vmSession.keyPressed(coinKeys[i]);
     }
 
-    expect(vmSession.totalInserted).to.equal(Math.round(new _Q(dataProvider.getData().coins).Sum(function(x) { return x.amount; }) * 100) / 100);
+    var validTotal = Math.round(new _Q(dataProvider.getData().coins).Where(function(x) { return x.code != 'p'; }).Sum(function(x) { return x.amount; }) * 100) / 100;
+    expect(vmSession.totalInserted).to.equal(validTotal);
     
   });
 
@@ -82,13 +83,23 @@ describe('vendingMachine', function() {
     
   });
 
-    it('Resets state when initialized', function() {   
+  it('Resets state when initialized', function() {   
     
     vmSession.totalInserted = 1.00;
     vmSession.lastKeyPressed = 'd';
     vmSession.initMachine();
 
-    expect(vmSession.totalInserted == 0.00 && vmSession.lastKeyPressed == '').to.equal(true);
+    expect(vmSession.totalInserted).to.equal(0.00);
+    expect(vmSession.lastKeyPressed).to.equal('');
+    
+  });
+
+  it('Rejects pennies when inserted', function() {   
+    
+    vmSession.initMachine();
+    var penny = new _Q(dataProvider.getData().coins).Single(function(x) { return x.name == 'Penny'; });
+    vmSession.coinInserted(penny.code);
+    expect(vmSession.totalInserted).to.equal(0.00);
     
   });
 
