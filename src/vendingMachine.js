@@ -23,5 +23,10 @@ module.exports = {
         stdin.resume(); 
     };
 
+    scope.initMachine = function()
+    {
+      
+    }
+
   }
 };
