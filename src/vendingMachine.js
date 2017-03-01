@@ -46,6 +46,11 @@ module.exports = {
       scope.display.write(scope.totalInserted.toString());
     };
 
+    scope.tryPurchaseProduct = function()
+    {
+
+    }
+
     scope.keyPressed = function(key)
     {
       scope.lastKeyPressed = key;

@@ -68,4 +68,12 @@ describe('vendingMachine', function() {
     
   });
 
+  it('Can have item purchased', function() {   
+    
+    vmSession = new vm.vmSession(mockStdin, mockConsole);
+    vmSession.tryPurchaseProduct();
+    expect(true).to.equal(true);
+    
+  });
+
 });
