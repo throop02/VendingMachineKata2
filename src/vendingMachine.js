@@ -58,6 +58,7 @@ module.exports = {
         if (product.price <= scope.totalInserted)
         {
           scope.totalInserted = Math.round((scope.totalInserted - product.price) * 100) / 100;
+          scope.display.write("THANK YOU");
         } else {
           scope.display.write("Price: " + product.price.toFixed(2));
         }

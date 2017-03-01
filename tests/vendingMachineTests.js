@@ -117,4 +117,15 @@ describe('vendingMachine', function() {
     
   });
 
+  it('Displays "THANK YOU" when purchase successful', function() {   
+    
+    vmSession.initMachine();
+    var product = new _Q(dataProvider.getData().products).First();
+    vmSession.totalInserted = product.price;
+    vmSession.keyPressed(product.code);
+
+    expect(vmSession.display.stack.indexOf("THANK YOU") > -1).to.equal(true);
+    
+  });
+
 });
