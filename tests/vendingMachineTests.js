@@ -7,12 +7,15 @@ var _Q = require('node-linq').LINQ;
 var vm = require('./../src/vendingMachine');
 var mockStdin = require('mock-stdin').stdin();
 var vmSession;
+var mocks = require('./mocks');
+var mockConsole;
 
 describe('vendingMachine', function() {
 
   before(function()
   {
-    vmSession = new vm.vmSession(mockStdin);
+    mockConsole = new mocks.mockConsole();
+    vmSession = new vm.vmSession(mockStdin, mockConsole);
   });
 
   it('Listens for keypad input', function() {   
@@ -25,10 +28,11 @@ describe('vendingMachine', function() {
     
   });
 
-  it('Can be initialized', function() {   
+  it('Displays welcome message when initialized', function() {   
     
     vmSession.initMachine();
-    expect(true).to.equal(true);
+
+    expect(vmSession.display.stack.indexOf("INSERT COIN: [p] Penny [n] Nickel [d] Dime [q] Quarter ([x] Exit)") > -1).to.equal(true);
     
   });
 
