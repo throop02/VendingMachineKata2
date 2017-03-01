@@ -7,6 +7,7 @@ module.exports = {
 
     scope.lastKeyPressed = '';
     scope.display;
+    scope.totalInserted = 0.00;
 
     scope.listenForKeypress = function()
     {

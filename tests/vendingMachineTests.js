@@ -37,11 +37,17 @@ describe('vendingMachine', function() {
     
   });
 
-    it('Can accept coins', function() {   
+  it('Can accept coins', function() {   
     
     vmSession.coinInserted();
 
     expect(true).to.equal(true);
+    
+  });
+
+  it('Keeps track of total inserted', function() {   
+
+    expect(vmSession.totalInserted).to.equal(0.00);
     
   });
 
