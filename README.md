@@ -21,3 +21,8 @@ Run app
 
 Navigate into 'src' folder and run 'node index.js'
 
+
+Screenshot
+----------
+
+![Alt text](http://www.evanvaughan.com/wp-content/uploads/2017/03/Screenshot-from-2017-03-01-14-17-40-1024x576.png "screenshot")
