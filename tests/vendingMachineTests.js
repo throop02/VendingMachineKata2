@@ -36,4 +36,12 @@ describe('vendingMachine', function() {
     
   });
 
+    it('Can accept coins', function() {   
+    
+    vmSession.coinInserted();
+
+    expect(true).to.equal(true);
+    
+  });
+
 });
