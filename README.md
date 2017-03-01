@@ -19,6 +19,5 @@ From app root: 'mocha tests --recursive'
 Run app
 -------
 
-Navigate into 'src' folder
-'node index.js'
+Navigate into 'src' folder and run 'node index.js'
 
