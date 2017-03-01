@@ -58,13 +58,15 @@ module.exports = {
     scope.keyPressed = function(key)
     {
       scope.lastKeyPressed = key;
+      var coinCodes = new scope.Q(scope.dataProvider.getData().coins).Select(function(x) { return x.code; }).ToArray();
+      var productCodes = new scope.Q(scope.dataProvider.getData().products).Select(function(x) { return x.code; }).ToArray();
 
-      if (['p','n','d','q'].indexOf(key) > -1)
+      if (coinCodes.indexOf(key) > -1)
       {
         scope.coinInserted(key);
       }
 
-      if (['a','b','c'].indexOf(key) > -1)
+      if (productCodes.indexOf(key) > -1)
       {
         scope.tryPurchaseProduct(key);
       }

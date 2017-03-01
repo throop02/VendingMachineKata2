@@ -43,13 +43,13 @@ describe('vendingMachine', function() {
   it('Accepts coins when coin key pressed', function() {   
     
     vmSession.initMachine();
-    var coinKeys = ['p','n','d','q'];
+    var coinKeys = new _Q(dataProvider.getData().coins).Select(function(x) { return x.code; }).ToArray()
     for(var i = 0; i < coinKeys.length; i++)
     {
       vmSession.keyPressed(coinKeys[i]);
     }
 
-    expect(vmSession.totalInserted).to.equal(0.41);
+    expect(vmSession.totalInserted).to.equal(Math.round(new _Q(dataProvider.getData().coins).Sum(function(x) { return x.amount; }) * 100) / 100);
     
   });
 
@@ -63,15 +63,16 @@ describe('vendingMachine', function() {
   it('Displays total when coin is inserted', function() {   
     
     vmSession.initMachine();
-    vmSession.coinInserted('q');
-    expect(vmSession.display.stack.indexOf("0.25") > -1).to.equal(true);
+    var coin = new _Q(dataProvider.getData().coins).Single(function(x) { return x.name == 'Quarter'; });
+    vmSession.coinInserted(coin.code);
+    expect(vmSession.display.stack.indexOf(coin.amount.toString()) > -1).to.equal(true);
     
   });
 
   it('Can have items purchased', function() {   
     
     vmSession.initMachine();
-    var productCodes = ['a','b','c'];
+    var productCodes = new _Q(dataProvider.getData().products).Select(function(x) { return x.code; }).ToArray()
     for(var i = 0; i < productCodes.length; i++)
     {
       vmSession.keyPressed(productCodes[i]);
