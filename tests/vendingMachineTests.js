@@ -66,20 +66,22 @@ describe('vendingMachine', function() {
     vmSession.initMachine();
     var coin = new _Q(dataProvider.getData().coins).Single(function(x) { return x.name == 'Quarter'; });
     vmSession.coinInserted(coin.code);
-    expect(vmSession.display.stack.indexOf(coin.amount.toString()) > -1).to.equal(true);
+    expect(vmSession.display.stack.indexOf(coin.amount.toFixed(2)) > -1).to.equal(true);
     
   });
 
   it('Can have items purchased', function() {   
     
     vmSession.initMachine();
-    var productCodes = new _Q(dataProvider.getData().products).Select(function(x) { return x.code; }).ToArray()
+    var products = new _Q(dataProvider.getData().products);
+    var productCodes = products.Select(function(x) { return x.code; }).ToArray();
+    vmSession.totalInserted = 100;
     for(var i = 0; i < productCodes.length; i++)
     {
       vmSession.keyPressed(productCodes[i]);
     }
 
-    expect(vmSession.totalInserted < 0).to.equal(true);
+    expect(vmSession.totalInserted).to.equal(97.85);
     
   });
 
@@ -99,7 +101,19 @@ describe('vendingMachine', function() {
     vmSession.initMachine();
     var penny = new _Q(dataProvider.getData().coins).Single(function(x) { return x.name == 'Penny'; });
     vmSession.coinInserted(penny.code);
+    
     expect(vmSession.totalInserted).to.equal(0.00);
+    
+    
+  });
+
+  it('Displays price if funds are insufficient', function() {   
+    
+    vmSession.initMachine();
+    var product = new _Q(dataProvider.getData().products).First();
+    vmSession.keyPressed(product.code);
+
+    expect(vmSession.display.stack.indexOf("Price: " + product.price.toFixed(2)) > -1).to.equal(true);
     
   });
 

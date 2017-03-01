@@ -13,9 +13,9 @@ describe('dataProviderService', function() {
     var p = provider.getData().products;
     
     expect(new _Q(p).Count()).to.equal(3);
-    expect(new _Q(p).Where(function(x) { return x.name == "Cola" && x.price == "1.00"; }).Count()).to.equal(1);
-    expect(new _Q(p).Where(function(x) { return x.name == "Chips" && x.price == "0.50"; }).Count()).to.equal(1);
-    expect(new _Q(p).Where(function(x) { return x.name == "Candy" && x.price == "0.65"; }).Count()).to.equal(1);
+    expect(new _Q(p).Where(function(x) { return x.name == "Cola" && x.price == 1.00; }).Count()).to.equal(1);
+    expect(new _Q(p).Where(function(x) { return x.name == "Chips" && x.price == 0.50; }).Count()).to.equal(1);
+    expect(new _Q(p).Where(function(x) { return x.name == "Candy" && x.price == 0.65; }).Count()).to.equal(1);
   });
 
   it('Returns information for coins', function() {   

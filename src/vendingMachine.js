@@ -48,14 +48,19 @@ module.exports = {
       if (coin.code != 'p')
       {
         scope.totalInserted = Math.round((scope.totalInserted + coin.amount) * 100) / 100;
-        scope.display.write(scope.totalInserted.toString());
+        scope.display.write(scope.totalInserted.toFixed(2));
       }
     };
 
     scope.tryPurchaseProduct = function(productType)
     {
         var product = new scope.Q(scope.dataProvider.getData().products).Single(function(x) { return x.code == productType; });
-        scope.totalInserted = Math.round((scope.totalInserted - product.price) * 100) / 100;
+        if (product.price <= scope.totalInserted)
+        {
+          scope.totalInserted = Math.round((scope.totalInserted - product.price) * 100) / 100;
+        } else {
+          scope.display.write("Price: " + product.price.toFixed(2));
+        }
     }
 
     scope.keyPressed = function(key)
